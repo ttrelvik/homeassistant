@@ -1,2 +1,3 @@
 # Ignore the entire Home Assistant configuration directory
 /config
+/matter-data
