@@ -11,6 +11,18 @@ services:
     privileged: true
     logging:
       driver: "local"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-o", "/dev/null", "http://localhost:8123/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 672M
 
   matter-server:
     container_name: matter-server
@@ -23,3 +35,15 @@ services:
     volumes:
       - ./matter-data:/data
       - /run/dbus:/run/dbus:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-o", "/dev/null", "http://localhost:5580/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+        reservations:
+          memory: 192M
